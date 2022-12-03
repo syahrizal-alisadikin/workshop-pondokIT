@@ -7,7 +7,7 @@
 
 #### Installation Steps
 
-1. Clone the repo : `git clone [https://github.com/syahrizal-alisadikin/project-apart.git](https://github.com/syahrizal-alisadikin/workshop-pondokIT.git)`
+1. Clone the repo : `git clone https://github.com/syahrizal-alisadikin/workshop-pondokIT.git`
 2. `$ cd workshop-pondokIT`
 3. `$ composer install`
 4. `$ cp .env.example .env`
