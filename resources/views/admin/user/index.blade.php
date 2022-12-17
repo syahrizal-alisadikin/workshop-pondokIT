@@ -1,5 +1,11 @@
 @extends('layouts.admin')
-
+@push('after-styles')
+    <style>
+        #table-category_processing{
+            display: none !important;
+        }
+    </style>
+@endpush
 @section('content')
    <section class="section">
        <div class="section-header">
@@ -49,18 +55,25 @@
 @push('after-script')
    <script>
        $(document).ready(function() {
-           $('#table-category').DataTable({
+        var table = $('#table-category').DataTable({
                processing: true,
                serverSide: true,
                ajax: "{!! url()->current() !!}",
                columns: [
-                   {data: 'id', name: 'id'},
+                { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false },
                    {data: 'name', name: 'name'},
                    {data: 'email', name: 'email'},
                    {data: 'roles', name: 'roles'},
                    {data: 'action', name: 'action', orderable: false, searchable: false},
-               ]
+               ],
+               columnDefs: [
+                    { className: 'text-center', targets: [0,1,2,3,4] },
+                ],
            });
+
+           setInterval( function () {
+            $('#table-category').DataTable().draw(true);
+            }, 2000 );
        });
    </script>
 @endpush

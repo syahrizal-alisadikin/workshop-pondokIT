@@ -18,7 +18,7 @@
  <script src="{{ asset('/') }}assets/js/custom.js"></script>
 
  <!-- Page Specific JS File -->
- <script src="{{ asset('/') }}assets/js/page/index.js"></script>
+ {{-- <script src="{{ asset('/') }}assets/js/page/index.js"></script> --}}
 
  {{-- datatables --}}
  <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>

@@ -35,4 +35,48 @@ class UserController extends Controller
 
         return view('admin.user.index');
     }
+
+    function create()
+    {
+        return view('admin.user.create');
+    }
+
+    function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+            'roles' => 'required'
+        ]);
+        $validated['password'] = bcrypt($validated['password']);
+
+        User::create($validated);
+
+
+        return redirect()->route('user.index')->with('success', 'User created successfully.');
+    }
+
+    public function edit(User $user)
+    {
+        return view('admin.user.edit', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'roles' => 'required'
+        ]);
+        $user->update($validated);
+
+        return redirect()->route('user.index')->with('success', 'User updated successfully.');
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User Deleted successfully.');
+    }
 }
