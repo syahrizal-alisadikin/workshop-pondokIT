@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,11 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-
+// Front End
+Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/category', [FrontendController::class, 'category'])->name('home.category');
+Route::get('/category/{slug}', [FrontendController::class, 'categoryDetail'])->name('home.category.detail');
+Route::get('/product/{slug}', [FrontendController::class, 'productDetail'])->name('home.product.detail');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
