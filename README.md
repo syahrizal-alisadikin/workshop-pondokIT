@@ -18,7 +18,9 @@
 8. `$ php artisan migrate`
 9. `$ php artisan db:seed`
 10. `$ php artisan storage:link`
-11. `$ php artisan serve`
+11. `$ npm install`
+12. `$ npm run build`
+13. `$ php artisan serve`
 
 
 Starting Laravel development server: http://127.0.0.1:8000
