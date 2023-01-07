@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -26,12 +28,14 @@ Route::get('/category', [FrontendController::class, 'category'])->name('home.cat
 Route::get('/category/{slug}', [FrontendController::class, 'categoryDetail'])->name('home.category.detail');
 Route::get('/product/{slug}', [FrontendController::class, 'productDetail'])->name('home.product.detail');
 
+Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout')->middleware('auth');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::prefix('admin')
-    ->middleware('auth')
+    ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/dashboard', function () {
             return view('admin');
@@ -57,11 +61,13 @@ Route::prefix('admin')
     });
 
 // user
-// Route::prefix('user')
-//     ->middleware('auth')
-//     ->group(function () {
-//         // url user
-//     });
+Route::prefix('user')
+    ->middleware('auth')
+    ->group(function () {
+        // url user
+        Route::get('dashboard', [DashboardUserController::class, 'dashboard'])->name('dashboard.user');
+        Route::get('orders', [DashboardUserController::class, 'orders'])->name('orders.user');
+    });
 
 
 

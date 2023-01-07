@@ -19,6 +19,8 @@
                      class="font-weight-bold mr-4" style="color: green">{{ Discount($product->price,$product->discount) }}</span>
                   <s class="font-weight-bold" style="text-decoration-color:red">{{ moneyFormat($product->price) }}</s>
                </div>
+             <form action="{{ route('checkout')}}" method="POST">
+               @csrf
                <table class="table table-borderless mt-3">
                   <tbody>
                      <tr>
@@ -34,6 +36,9 @@
                         <td class="font-weight-bold">HARI</td>
                         <td>:</td>
                         <td>
+                           {{--  $price - ($price * $discount / 100) --}}
+                           <input type="hidden" value="{{ $product->price - ($product->price * $product->discount /100) }}" name="price" id="price">
+                           <input type="hidden" value="{{ $product->id }}" name="product_id" id="product_id">
                            <select name="hari" id="hari" class="form-control">
                               <option value="1">1 Hari</option>
                               <option value="2">2 Hari</option>
@@ -50,15 +55,16 @@
                         <td class="font-weight-bold">TOTAL PEMBAYARAN</td>
                         <td>:</td>
                         <td>
-                           <span class="font-weight-bold" id="total" style="color: green">Rp.5000.000</span>
+                           <span class="font-weight-bold" id="total" style="color: green">{{ Discount($product->price,$product->discount) }} </span>
                         </td>
                         <td></td>
                      </tr>
 
                   </tbody>
                </table>
-               <button class="btn btn-primary btn-lg btn-block"><i class="fa fa-shopping-cart"></i> SEWA
+               <button class="btn btn-primary btn-lg btn-block" type="submit"><i class="fa fa-shopping-cart"></i> SEWA
                   PRODUCT</button>
+             </form>
             </div>
          </div>
       </div>
@@ -76,3 +82,22 @@
    </div>
 </div>
 @endsection
+
+@push('after-script')
+    <script>
+      $("#hari").on("change", function(){
+         var hari = this.value;
+         var price = $("#price").val();
+
+         const jumlah = new Intl.NumberFormat('id-ID', {
+                maximumSignificantDigits: 5
+            }).format(price * hari);
+
+         $("#total").html(`Rp ${jumlah}`)
+
+         $("#price").val(price * hari)
+
+
+      })
+    </script>
+@endpush

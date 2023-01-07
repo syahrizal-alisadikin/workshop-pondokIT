@@ -23,8 +23,15 @@
 
 
                   <div class="account">
-                     <a href="login.html" class="btn search-button btn-md d-none d-md-block ml-4"><i
+                     @guest
+                         
+                     <a href="{{ route('login') }}" class="btn search-button btn-md d-none d-md-block ml-4"><i
                            class="fa fa-user-circle"></i> ACCOUNT</a>
+                     @endguest
+                     @auth
+                     <a href="{{ route('dashboard.user') }}" class="btn search-button btn-md d-none d-md-block ml-4"><i
+                        class="fa fa-user-circle"></i> ACCOUNT</a>
+                     @endauth
                   </div>
 
                </div>

@@ -17,6 +17,8 @@ class Order extends Model
         'total',
         'discount',
         'status',
+        'star_date',
+        'end_date',
         'midtrans_id',
     ];
 
